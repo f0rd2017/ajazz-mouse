@@ -1,0 +1,21 @@
+pkgbase = ajazz-mouse
+	pkgdesc = Configure the Ajazz AJ159 V2 wireless mouse (GTK4 + libadwaita)
+	pkgver = 0.1.0
+	pkgrel = 1
+	url = https://github.com/f0rd2017/ajazz-mouse
+	arch = x86_64
+	arch = aarch64
+	license = MIT
+	makedepends = cargo
+	depends = gtk4
+	depends = libadwaita
+	depends = glib2
+	depends = cairo
+	depends = pango
+	depends = gcc-libs
+	depends = glibc
+	depends = hicolor-icon-theme
+	source = ajazz-mouse-0.1.0.tar.gz::https://github.com/f0rd2017/ajazz-mouse/archive/refs/tags/v0.1.0.tar.gz
+	sha256sums = 16c5ccb63e82706435f049edfb1b8809638b7df28ceb8ba6c54554af18c961ac
+
+pkgname = ajazz-mouse

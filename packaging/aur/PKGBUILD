@@ -9,7 +9,7 @@ license=('MIT')
 depends=('gtk4' 'libadwaita' 'glib2' 'cairo' 'pango' 'gcc-libs' 'glibc' 'hicolor-icon-theme')
 makedepends=('cargo')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('SKIP')
+sha256sums=('16c5ccb63e82706435f049edfb1b8809638b7df28ceb8ba6c54554af18c961ac')
 
 prepare() {
   cd "$pkgname-$pkgver"
