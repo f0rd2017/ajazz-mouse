@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.f0rd2017.AjazzMouse</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT</project_license>
+  <name>Ajazz Mouse</name>
+  <summary>Configure the Ajazz AJ159 V2 mouse</summary>
+  <summary xml:lang="ru">Настройка мыши Ajazz AJ159 V2</summary>
+  <description>
+    <p>
+      A native settings window for the Ajazz AJ159 V2 wireless mouse on Linux. It talks to the
+      mouse directly over the 2.4 GHz receiver, without the official web driver.
+    </p>
+    <p xml:lang="ru">
+      Нативное окно настройки беспроводной мыши Ajazz AJ159 V2 под Linux. Работает с мышью
+      напрямую через донгл 2.4 ГГц, без официального веб-драйвера.
+    </p>
+    <ul>
+      <li>Remap buttons, the wheel and the DPI button: mouse functions, media keys, any key or shortcut, macros</li>
+      <li xml:lang="ru">Кнопки, колесо и кнопка DPI: функции мыши, медиа, любая клавиша или сочетание, макросы</li>
+      <li>Six DPI levels from 50 to 32000 with their indicator colors</li>
+      <li xml:lang="ru">Шесть уровней DPI от 50 до 32000 и цвета их индикатора</li>
+      <li>Polling rate, lift-off distance, Motion Sync, ripple control, angle snapping</li>
+      <li xml:lang="ru">Частота опроса, высота отрыва, Motion Sync, подавление дрожания, выпрямление линий</li>
+      <li>Button debounce, sleep timers and the DPI indicator mode</li>
+      <li xml:lang="ru">Отклик кнопок, таймеры сна и режим индикатора DPI</li>
+    </ul>
+    <p>Settings are read from the mouse when the window opens, and every change is verified by reading it back.</p>
+    <p xml:lang="ru">Настройки читаются из мыши при открытии окна, каждая правка сверяется чтением.</p>
+  </description>
+  <developer id="io.github.f0rd2017">
+    <name>yuto</name>
+  </developer>
+  <launchable type="desktop-id">io.github.f0rd2017.AjazzMouse.desktop</launchable>
+  <url type="homepage">https://github.com/f0rd2017/ajazz-mouse</url>
+  <url type="bugtracker">https://github.com/f0rd2017/ajazz-mouse/issues</url>
+  <url type="vcs-browser">https://github.com/f0rd2017/ajazz-mouse</url>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/f0rd2017/ajazz-mouse/main/docs/screenshot.png</image>
+      <caption>Button settings</caption>
+    </screenshot>
+  </screenshots>
+  <provides>
+    <binary>ajazz-mouse</binary>
+    <modalias>usb:v1D57pFA60d*</modalias>
+  </provides>
+  <supports>
+    <control>pointing</control>
+    <control>keyboard</control>
+  </supports>
+  <requires>
+    <display_length compare="ge">768</display_length>
+  </requires>
+  <content_rating type="oars-1.1"/>
+  <categories>
+    <category>Settings</category>
+    <category>HardwareSettings</category>
+  </categories>
+  <releases>
+    <release version="0.1.0" date="2026-10-16">
+      <description>
+        <p>First public release.</p>
+      </description>
+    </release>
+  </releases>
+</component>

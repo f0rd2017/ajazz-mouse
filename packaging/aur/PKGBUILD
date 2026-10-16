@@ -1,0 +1,44 @@
+# Maintainer: yuto <f0rd2017@users.noreply.github.com>
+pkgname=ajazz-mouse
+pkgver=0.1.0
+pkgrel=1
+pkgdesc='Configure the Ajazz AJ159 V2 wireless mouse (GTK4 + libadwaita)'
+arch=('x86_64' 'aarch64')
+url='https://github.com/f0rd2017/ajazz-mouse'
+license=('MIT')
+depends=('gtk4' 'libadwaita' 'glib2' 'cairo' 'pango' 'gcc-libs' 'glibc' 'hicolor-icon-theme')
+makedepends=('cargo')
+source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
+sha256sums=('SKIP')
+
+prepare() {
+  cd "$pkgname-$pkgver"
+  export RUSTUP_TOOLCHAIN=stable
+  cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
+}
+
+build() {
+  cd "$pkgname-$pkgver"
+  export RUSTUP_TOOLCHAIN=stable
+  export CARGO_TARGET_DIR=target
+  cargo build --frozen --release
+}
+
+check() {
+  cd "$pkgname-$pkgver"
+  export RUSTUP_TOOLCHAIN=stable
+  cargo test --frozen
+}
+
+package() {
+  cd "$pkgname-$pkgver"
+  local id=io.github.f0rd2017.AjazzMouse
+  install -Dm755 target/release/ajazz-mouse -t "$pkgdir/usr/bin"
+  install -Dm644 "data/$id.desktop" -t "$pkgdir/usr/share/applications"
+  install -Dm644 "data/$id.metainfo.xml" -t "$pkgdir/usr/share/metainfo"
+  install -Dm644 data/70-ajazz-mouse.rules -t "$pkgdir/usr/lib/udev/rules.d"
+  for size in 128 256 512; do
+    install -Dm644 "data/icons/hicolor/${size}x$size/apps/$id.png" -t "$pkgdir/usr/share/icons/hicolor/${size}x$size/apps"
+  done
+  install -Dm644 LICENSE -t "$pkgdir/usr/share/licenses/$pkgname"
+}

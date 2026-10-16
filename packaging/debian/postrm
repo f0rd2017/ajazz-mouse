@@ -1,0 +1,5 @@
+#!/bin/sh
+set -e
+if [ "$1" = "remove" ] && command -v udevadm >/dev/null; then
+    udevadm control --reload-rules || true
+fi

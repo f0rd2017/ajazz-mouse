@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Ajazz Mouse
+Comment=Configure the Ajazz AJ159 V2 mouse: DPI, buttons, macros, sleep
+Comment[ru]=Настройки мыши Ajazz AJ159 V2: DPI, кнопки, макросы, сон
+Exec=ajazz-mouse
+Icon=io.github.f0rd2017.AjazzMouse
+Terminal=false
+Categories=Settings;HardwareSettings;GTK;
+Keywords=mouse;dpi;macro;polling;ajazz;
+Keywords[ru]=мышь;dpi;макрос;кнопки;ajazz;
+StartupNotify=true

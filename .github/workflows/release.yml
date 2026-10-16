@@ -1,0 +1,80 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  deb:
+    runs-on: ubuntu-latest
+    container: debian:trixie
+    steps:
+      - name: Install build dependencies
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends build-essential ca-certificates curl git pkg-config dpkg-dev libgtk-4-dev libadwaita-1-dev
+      - uses: actions/checkout@v7
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo install cargo-deb --locked
+      - run: cargo deb --locked
+      - uses: actions/upload-artifact@v7
+        with:
+          name: deb
+          path: target/debian/*.deb
+
+  rpm:
+    runs-on: ubuntu-latest
+    container: fedora:42
+    steps:
+      - name: Install build dependencies
+        run: dnf install -y gcc git pkgconf-pkg-config rpm-build gtk4-devel libadwaita-devel
+      - uses: actions/checkout@v7
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo install cargo-generate-rpm --locked
+      - run: cargo build --release --locked
+      - run: cargo generate-rpm
+      - uses: actions/upload-artifact@v7
+        with:
+          name: rpm
+          path: target/generate-rpm/*.rpm
+
+  # Пакеты ставятся на чистые системы, и бинарник находит все библиотеки.
+  test-deb:
+    needs: deb
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        image: ['debian:trixie', 'ubuntu:26.04']
+    container: ${{ matrix.image }}
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: deb
+      - run: apt-get update && apt-get install -y ./*.deb
+      - run: '! ldd /usr/bin/ajazz-mouse | grep "not found"'
+
+  test-rpm:
+    needs: rpm
+    runs-on: ubuntu-latest
+    container: fedora:42
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: rpm
+      - run: dnf install -y ./*.rpm
+      - run: '! ldd /usr/bin/ajazz-mouse | grep "not found"'
+
+  release:
+    needs: [test-deb, test-rpm]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          merge-multiple: true
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --title "Ajazz Mouse ${GITHUB_REF_NAME#v}" --generate-notes ./*.deb ./*.rpm

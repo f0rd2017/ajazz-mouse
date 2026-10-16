@@ -1,0 +1,3 @@
+# Ajazz mice on Xenta-based receivers (USB vendor 1d57): let the user at the
+# local seat read and write the mouse settings over hidraw.
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1d57", TAG+="uaccess"
